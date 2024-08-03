@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http://192.168.100.36:3000/api/',
+  //apiUrl: 'http://192.168.100.36:3000/api/',
+  apiUrl: 'https://recicladora.vercel.app/api/',
 };
 
 /*

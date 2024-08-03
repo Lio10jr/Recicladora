@@ -13,6 +13,7 @@ const { err } = require("../middlewares/err");
 module.exports = function (app) {
   // Middlewares
   const allowedOrigins = [
+    'https://recicladora.vercel.app/api/',
     'http://localhost:8100', 
     'http://localhost:4200', 
     'http://192.168.100.36:8100', 
