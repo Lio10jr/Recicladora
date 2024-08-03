@@ -1,0 +1,84 @@
+<app-header title="Inicio" mode="ios"></app-header>
+
+<ion-content [fullscreen]="true">
+  <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <div class="card" style="background: #009688;">
+    <div class="card-wrapper">
+      <div class="header">
+        <p class="saludo">Hola, <br> <span>{{user().nombre + ' ' + user().apellido}}</span></p>
+        <div>
+          <ion-button color="light" fill="clear" (click)="salir()">
+            <ion-icon color="danger" slot="icon-only" ios="log-out-outline" md="log-out-outline"></ion-icon>
+          </ion-button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    Contenedores
+  </div>
+
+  <ion-list lines="full">
+    <ng-container *ngIf="listContainer">
+      <div class="card" *ngFor="let container of listContainer">
+        <div class="card-wrapper">
+          <div class="card-icon">
+            <div class="icon-cart-box" *ngIf="container.tipo_reciclaje === 'Orgánico'">
+              <svg xmlns="http://www.w3.org/2000/svg" height="20" width="20" viewBox="0 0 24 24">
+                <g fill="none" stroke="#009688" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                  color="#009688">
+                  <path
+                    d="M10 9.255C7.606 7.958 5.08 5.715 3 2m8.616 2.419C9.58 3.084 7.097 3.642 6.069 5.666s-.211 4.747 1.824 6.083c1.842 1.209 5.874 2.459 9.107-1.004c-3.03-1.29-3.35-4.99-5.384-6.326" />
+                  <path
+                    d="M4 11c-.64.47-1 1.005-1 1.572C3 14.465 7.03 16 12 16s9-1.535 9-3.428c0-.567-.36-1.101-1-1.572" />
+                  <path
+                    d="M21 13c0 3.577-2.506 6.715-5.205 8.482c-.555.364-1.215.518-1.878.518h-3.834c-.663 0-1.323-.154-1.878-.518C5.506 19.715 3 16.577 3 13" />
+                </g>
+              </svg>
+            </div>
+            <div class="icon-cart-box" *ngIf="container.tipo_reciclaje === 'Papel'">
+              <svg xmlns="http://www.w3.org/2000/svg" height="20" width="20" viewBox="0 0 15 15">
+                <path fill="#009688" fill-rule="evenodd"
+                  d="M4.61.063a.45.45 0 0 0-.528.27l-.928 2.32l-2.321.93a.45.45 0 0 0-.193.687l1.371 1.829l-.948 3.792a.45.45 0 0 0 .264.524L4.2 11.613l1.425 2.137a.45.45 0 0 0 .498.183l3.5-1a.41.41 0 0 0 .018-.006l3-1a.45.45 0 0 0 .297-.33l1-4.5a.45.45 0 0 0-.169-.457l-1.82-1.365V3a.45.45 0 0 0-.249-.402l-3-1.5a.45.45 0 0 0-.092-.035zm6.822 5.949l1.343 1.007l-2.563 2.135a.45.45 0 0 0-.139.204l-.82 2.457l-1.515-.947a.45.45 0 1 0-.477.764l1.142.713l-2.21.632L4.873 11a.45.45 0 0 0-.2-.165L2.03 9.734l.821-3.284H5a.45.45 0 1 0 0-.9H2.725L1.712 4.2l1.802-.721l2.844.948a.45.45 0 0 0 .493-.146l1.773-2.216l2.426 1.213v1.917l-2.217.887a.45.45 0 0 0-.26.276l-.5 1.5a.45.45 0 1 0 .854.284L9.36 6.84zM7.711 1.766L6.345 3.474l-2.25-.75l.677-1.692zm2.5 10.023l1.905-.635l.659-2.964l-1.889 1.574z"
+                  clip-rule="evenodd" />
+              </svg>
+            </div>
+            <div class="icon-cart-box" *ngIf="container.tipo_reciclaje === 'Vidrio'">
+              <svg xmlns="http://www.w3.org/2000/svg" height="20" width="20" viewBox="0 0 512 512">
+                <path fill="#009688"
+                  d="m431.688 18.813l-83.594 65.75L456.5 63.03l-24.813-44.218zm-121.375.906l-21.47 91.5l79.72-91.5zm-160.657 4.405l-2.187 6.25c-13.237 37.557-21.314 79.002-21.314 118.094c0 53.795 15.034 93.182 40.22 118.874c18.918 19.3 43.185 30.496 69.78 34.875c17.132 48.134 16.18 101.07-2.47 148.78c-30.572 5.112-60.267 18.292-86.342 39.53H378.53c-26.062-21.23-55.75-34.383-86.31-39.5c-18.647-47.685-19.602-100.598-2.5-148.717c26.782-4.308 51.187-15.52 70.124-34.97c13.345-13.706 23.776-31.308 30.625-52.906l-84.75-71.656l-51.595-1.093L306.28 261.31l-50.186-73.687l-79.156 64.47l63.812-86.94l-16.28-23.905l-53.845-16.156l-9.813-2.938l3.844-9.53l36-88.5zm71.156 0l-34.968 86l48.562 14.594l32.78-33.69l-17.436-66.905h-28.938zM395.438 97.03l-81.78 28l81.906 69.25c2.706-13.91 4.156-29.165 4.156-45.81c0-16.88-1.513-34.186-4.283-51.44z" />
+              </svg>
+            </div>
+            <div class="icon-cart-box" *ngIf="container.tipo_reciclaje === 'Peligroso'">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+                <path fill="#009688"
+                  d="M9.344 20q-.323 0-.628-.13q-.304-.132-.522-.349L4.48 15.806q-.217-.217-.348-.522T4 14.656V9.344q0-.323.13-.628q.132-.304.349-.522L8.194 4.48q.217-.218.522-.348Q9.021 4 9.344 4h5.312q.323 0 .628.13q.305.132.522.349l3.715 3.715q.218.217.348.522q.131.305.131.628v5.312q0 .323-.13.628q-.132.305-.349.522l-3.715 3.715q-.217.218-.522.348q-.305.131-.628.131zM9.1 19h5.8l4.1-4.1V9.1L14.9 5H9.1L5 9.1v5.8zm2.9-6.292l2.496 2.496q.14.14.344.15t.364-.15t.16-.354t-.16-.354L12.708 12l2.496-2.496q.14-.14.15-.344t-.15-.364t-.354-.16t-.354.16L12 11.292L9.504 8.796q-.14-.14-.344-.15t-.364.15t-.16.354t.16.354L11.292 12l-2.496 2.496q-.14.14-.15.344t.15.364t.354.16t.354-.16zM12 12" />
+              </svg>
+            </div>
+            <div class="icon-cart-box" *ngIf="container.tipo_reciclaje === 'Plástico'">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+                <path fill="#009688" stroke="#009688" d="M10 .5h4M6.5 10H7l1.027.171a24.168 24.168 0 0 0 7.946 0L17 10h.5m-11 7H7l1.027-.171a24.168 24.168 0 0 1 7.946 0L17 17h.5m-4-13.5h-3a7.236 7.236 0 0 0-4 6.472V21.5a2 2 0 0 0 2 2h7a2 2 0 0 0 2-2V9.972a7.236 7.236 0 0 0-4-6.472Z" />
+              </svg>
+            </div>
+          </div>
+
+          <div class="card-content">
+            <div class="card-title-wrapper">
+              <span class="card-title">{{container.tipo_reciclaje}}</span>
+            </div>
+            <div class="product-name">
+              <ion-badge slot="start" [color]="container.estado === 'En uso' ? 'success' : 'danger'">{{container.estado}}</ion-badge>
+            </div>
+            <div class="product-price">Max: {{container.capacidadMax}}Kg. - Actual: {{container.capacidadActual}}Kg.
+            </div>
+            <button class="btn-view-cart" type="button" (click)="despachar(container)">Despachar</button>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+
+  </ion-list>
+</ion-content>

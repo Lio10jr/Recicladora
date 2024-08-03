@@ -1,0 +1,37 @@
+.custom-button {
+    background-color: white;
+    text-align: center;
+    width: 12rem;
+    border-radius: 1rem;
+    height: 3.5rem;
+    position: relative;
+    font-family: sans-serif;
+    color: black;
+    font-size: 1.25rem;
+    font-weight: 600;
+    border: none;
+}
+
+.custom-button-inner {
+    background-color: #a6aed9fc;
+    border-radius: 0.75rem;
+    height: 3rem;
+    width: 25%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    left: 0.25rem;
+    top: 0.25rem;
+    z-index: 10;
+    transition: width 0.5s;
+}
+
+.custom-button:hover .custom-button-inner {
+    width: 11.5rem;
+}
+
+.custom-button-text {
+    transform: translateX(0.5rem);
+    margin-bottom: 0;
+}

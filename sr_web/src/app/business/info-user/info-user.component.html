@@ -1,0 +1,62 @@
+<div class="d-flex justify-content-between align-items-center">
+    <button type="button" class="custom-button" (click)="regresar()">
+        <div class="custom-button-inner">
+            <svg width="25px" height="25px" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+                <path fill="#000000" d="M224 480h640a32 32 0 1 1 0 64H224a32 32 0 0 1 0-64z"></path>
+                <path fill="#000000"
+                    d="m237.248 512 265.408 265.344a32 32 0 0 1-45.312 45.312l-288-288a32 32 0 0 1 0-45.312l288-288a32 32 0 1 1 45.312 45.312L237.248 512z">
+                </path>
+            </svg>
+        </div>
+        <p class="custom-button-text">Regresar</p>
+    </button>
+    <button type="button" class="custom-button" (click)="salir()">
+        Salir
+    </button>
+</div>
+
+<div class="m-3 p-3 rounded border shadow">
+    <p class="text-center"><strong>Información personal</strong></p>
+    <div class="d-flex justify-content-between w-25">
+        <p><strong>Nombre: </strong></p>
+        <p>{{user().nombre}}</p>
+    </div>
+    <div class="d-flex justify-content-between w-25">
+        <p><strong>Apellido: </strong></p>
+        <p>{{user().apellido}}</p>
+    </div>
+    <div class="d-flex justify-content-between w-25">
+        <p><strong>Saldo disponible: </strong></p>
+        <p>{{user().saldo.toFixed(2)}}</p>
+    </div>
+</div>
+
+<div class="m-3 p-3 rounded border shadow">
+    <p class="text-center"><strong>Historial de transacciones</strong></p>
+    <div class="d-flex justify-content-between w-100">
+        <table class="table">
+            <thead class="table-primary">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Vendedor</th>
+                    <th scope="col">Comprador</th>
+                    <th scope="col">Producto</th>
+                    <th scope="col">Precio</th>
+                    <th scope="col">Comisión</th>
+                    <th scope="col">Ganancia/Perdida</th>
+                </tr>
+            </thead>
+            <tbody class="table-group-divider" *ngIf="listVentas">
+                <tr *ngFor="let venta of listVentas; let index = index">
+                    <th scope="row">{{index + 1}}</th>
+                    <td>{{venta.vendedor_ced == user().cedula ? 'Yo' : venta.vendedor_ced}}</td>
+                    <td>{{venta.comprador_ced == user().cedula ? 'Yo' : venta.comprador_ced}}</td>
+                    <td>{{venta.producto_uid}}</td>
+                    <td>$ {{venta.precio_pro}}</td>
+                    <td>$ {{venta.comision}}</td>
+                    <td [ngClass]="venta.vendedor_ced == user().cedula ? 'text-success' : 'text-danger'">$ {{venta.monto_total}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

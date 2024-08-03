@@ -1,0 +1,187 @@
+<div class="d-flex justify-content-between align-items-center">
+    <button type="button" class="custom-button" (click)="regresar()">
+        <div class="custom-button-inner">
+            <svg width="25px" height="25px" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+                <path fill="#000000" d="M224 480h640a32 32 0 1 1 0 64H224a32 32 0 0 1 0-64z"></path>
+                <path fill="#000000"
+                    d="m237.248 512 265.408 265.344a32 32 0 0 1-45.312 45.312l-288-288a32 32 0 0 1 0-45.312l288-288a32 32 0 1 1 45.312 45.312L237.248 512z">
+                </path>
+            </svg>
+        </div>
+        <p class="custom-button-text">Regresar</p>
+    </button>
+    <button type="button" class="custom-button" (click)="salir()">
+        Salir
+    </button>
+</div>
+<!-- Lista de productos -->
+<div class="container card-container">
+    <div class="d-flex flex-wrap justify-content-center align-items-center">
+        <ng-container *ngIf="listProductsActivos; else loading">
+            <ng-container *ngFor="let product of listProductsActivos">
+                <div class="card" *ngIf="product.estado">
+                    <div class="card-img">
+                        <img class="img" [src]="product.image" alt=".." width="25" >
+                    </div>
+                    <div class="card-title">{{product.nombre_pro}}</div>
+                    <div class="card-subtitle overflow-auto">{{product.descripcion}}
+                    </div>
+                    <hr class="card-divider">
+                    <div class="card-footer">
+                        <div class="card-price"><span>$</span> {{product.precio}}</div>
+                        <button class="card-btn" (click)="comprarPro(product)" *ngIf="user().cedula !== product.vendedor_ced">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                                <path
+                                    d="m397.78 316h-205.13a15 15 0 0 1 -14.65-11.67l-34.54-150.48a15 15 0 0 1 14.62-18.36h274.27a15 15 0 0 1 14.65 18.36l-34.6 150.48a15 15 0 0 1 -14.62 11.67zm-193.19-30h181.25l27.67-120.48h-236.6z">
+                                </path>
+                                <path
+                                    d="m222 450a57.48 57.48 0 1 1 57.48-57.48 57.54 57.54 0 0 1 -57.48 57.48zm0-84.95a27.48 27.48 0 1 0 27.48 27.47 27.5 27.5 0 0 0 -27.48-27.47z">
+                                </path>
+                                <path
+                                    d="m368.42 450a57.48 57.48 0 1 1 57.48-57.48 57.54 57.54 0 0 1 -57.48 57.48zm0-84.95a27.48 27.48 0 1 0 27.48 27.47 27.5 27.5 0 0 0 -27.48-27.47z">
+                                </path>
+                                <path
+                                    d="m158.08 165.49a15 15 0 0 1 -14.23-10.26l-25.71-77.23h-47.44a15 15 0 1 1 0-30h58.3a15 15 0 0 1 14.23 10.26l29.13 87.49a15 15 0 0 1 -14.23 19.74z">
+                                </path>
+                            </svg>
+                        </button>
+                        <button class="card-btn" (click)="eliminarPro(product.id!)" *ngIf="user().cedula === product.vendedor_ced">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40">
+                                <path d="M21.499 19.994L32.755 8.727a1.064 1.064 0 0 0-.001-1.502c-.398-.396-1.099-.398-1.501.002L20 18.494L8.743 7.224c-.4-.395-1.101-.393-1.499.002a1.05 1.05 0 0 0-.309.751c0 .284.11.55.309.747L18.5 19.993L7.245 31.263a1.064 1.064 0 0 0 .003 1.503c.193.191.466.301.748.301h.006c.283-.001.556-.112.745-.305L20 21.495l11.257 11.27c.199.198.465.308.747.308a1.058 1.058 0 0 0 1.061-1.061c0-.283-.11-.55-.31-.747z" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>                
+            </ng-container>
+            <ng-container *ngIf="listProductsActivos && listProductsActivos.length === 0" class="mt-3">
+                <img src="assets/images/products_no_found.png" alt="" width="100%" height="100%">
+            </ng-container>
+        </ng-container>
+        <ng-template #loading>
+            <div class="modal-body">
+                <div class="d-flex justify-content-center">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+                <p class="text-center mt-3">Cargando...</p>
+            </div>
+        </ng-template>
+    </div>
+</div>
+
+<!-- Agregar button -->
+<button class="floating-button" (click)="modalNewProduct()">
+    <svg width="24" height="24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 5v14M5 12h14" />
+    </svg>
+</button>
+
+<!-- add products -->
+<div class="modal fade" id="productModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Agregar Nuevo Producto</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+                    <div class="mb-3">
+                        <label for="nombre_pro" class="form-label">Nombre del Producto</label>
+                        <input type="text" id="nombre_pro" formControlName="nombre_pro" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label for="descripcion" class="form-label">Descripción</label>
+                        <input type="text" id="descripcion" formControlName="descripcion" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label for="image" class="form-label">Imagen</label>
+                        <input type="file" id="image" accept=".png, .jpg, .jpeg" (change)="onFileChange($event)"
+                            class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label for="precio" class="form-label">Precio</label>
+                        <input type="number" id="precio" formControlName="precio" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label for="fecha_publicacion" class="form-label">Fecha de Publicación</label>
+                        <input type="date" id="fecha_publicacion" formControlName="fecha_publicacion"
+                            class="form-control">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- venta product -->
+<div class="modal fade" id="ventaModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Agregar Nuevo Producto</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+                    <div class="mb-3">
+                        <label for="nombre_pro" class="form-label">Nombre del Porducto</label>
+                        <input type="text" id="nombre_pro" formControlName="nombre_pro" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label for="descripcion" class="form-label">Descripción</label>
+                        <input type="text" id="descripcion" formControlName="descripcion" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label for="image" class="form-label">Imagen</label>
+                        <input type="file" id="image" accept=".png, .jpg, .jpeg" (change)="onFileChange($event)"
+                            class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label for="precio" class="form-label">Precio</label>
+                        <input type="number" id="precio" formControlName="precio" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label for="fecha_publicacion" class="form-label">Fecha de Publicación</label>
+                        <input type="date" id="fecha_publicacion" formControlName="fecha_publicacion"
+                            class="form-control">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- toast -->
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+            <img src="assets/images/recycle.jpeg" class="rounded me-2" alt="..." width="30" height="30">
+            <strong class="me-auto">{{ title }}</strong>
+            <small>Just now</small>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+            {{ message }}
+        </div>
+    </div>
+</div>
+
+<!-- loading -->
+<div class="modal fade" id="loadingModal" tabindex="-1" aria-labelledby="loadingModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="d-flex justify-content-center">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+                <p class="text-center mt-3">Cargando...</p>
+            </div>
+        </div>
+    </div>
+</div>
