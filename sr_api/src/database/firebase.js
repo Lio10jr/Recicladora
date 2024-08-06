@@ -29,7 +29,7 @@ const firebaseConfig = {
 
 admin.initializeApp({
   credential: admin.credential.cert(firebaseConfig),
-  storageBucket: 'gs://sistema-reciclaje.appspot.com'
+  storageBucket: 'gs://proyerecic.appspot.com'
 });
 const bucket = admin.storage().bucket();
 
